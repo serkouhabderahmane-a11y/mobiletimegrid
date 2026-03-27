@@ -1,5 +1,9 @@
-export 'user.dart';
+export 'user_model.dart';
 export 'task.dart';
 export 'training_video.dart';
 export 'government_forms.dart';
 export 'time_entry.dart';
+export 'chat/chat_model.dart';
+export 'attendance/attendance_model.dart';
+export 'holiday/holiday_model.dart';
+export 'organization/organization_model.dart';

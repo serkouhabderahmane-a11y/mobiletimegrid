@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'animations.dart';
 
 class ProgressBar extends StatelessWidget {
   final double progress;
@@ -21,7 +22,6 @@ class ProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progressColor = color ?? Theme.of(context).primaryColor;
-    final bgColor = backgroundColor ?? Colors.grey.shade200;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,6 +38,7 @@ class ProgressBar extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
+                      color: Color(0xFF1E293B),
                     ),
                   ),
                 if (showPercentage)
@@ -52,28 +53,13 @@ class ProgressBar extends StatelessWidget {
               ],
             ),
           ),
-        Container(
+        AnimatedProgressBar(
+          progress: progress,
           height: height,
-          decoration: BoxDecoration(
-            color: bgColor,
-            borderRadius: BorderRadius.circular(height / 2),
-          ),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return Stack(
-                children: [
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    width: constraints.maxWidth * progress.clamp(0.0, 1.0),
-                    decoration: BoxDecoration(
-                      color: progressColor,
-                      borderRadius: BorderRadius.circular(height / 2),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
+          gradientColors: [
+            progressColor,
+            progressColor.withValues(alpha: 0.7),
+          ],
         ),
       ],
     );
@@ -101,7 +87,7 @@ class CircularProgressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progressColor = color ?? Theme.of(context).primaryColor;
-    final bgColor = backgroundColor ?? Colors.grey.shade200;
+    final bgColor = backgroundColor ?? Colors.grey.withValues(alpha: 0.15);
 
     return SizedBox(
       width: size,
@@ -114,6 +100,7 @@ class CircularProgressWidget extends StatelessWidget {
             strokeWidth: strokeWidth,
             backgroundColor: bgColor,
             valueColor: AlwaysStoppedAnimation<Color>(progressColor),
+            strokeCap: StrokeCap.round,
           ),
           Center(
             child: Column(
@@ -158,41 +145,59 @@ class StepProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
         Row(
           children: List.generate(totalSteps * 2 - 1, (index) {
             if (index.isOdd) {
               return Expanded(
-                child: Container(
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
                   height: 3,
-                  color: index ~/ 2 < currentStep
-                      ? Theme.of(context).primaryColor
-                      : Colors.grey.shade300,
+                  decoration: BoxDecoration(
+                    color: index ~/ 2 < currentStep
+                        ? primaryColor
+                        : (isDark ? Colors.grey.shade700 : Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
               );
             }
             final stepIndex = index ~/ 2;
-            return Container(
-              width: 32,
-              height: 32,
+            final isCompleted = stepIndex < currentStep;
+            final isCurrent = stepIndex == currentStep;
+
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              width: isCurrent ? 36 : 30,
+              height: isCurrent ? 36 : 30,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: stepIndex <= currentStep
-                    ? Theme.of(context).primaryColor
-                    : Colors.grey.shade300,
+                color: isCompleted || isCurrent
+                    ? primaryColor
+                    : (isDark ? Colors.grey.shade700 : Colors.grey.shade300),
+                boxShadow: isCurrent
+                    ? [
+                        BoxShadow(
+                          color: primaryColor.withValues(alpha: 0.4),
+                          blurRadius: 12,
+                          spreadRadius: 2,
+                        ),
+                      ]
+                    : null,
               ),
               child: Center(
-                child: stepIndex < currentStep
-                    ? const Icon(Icons.check, color: Colors.white, size: 18)
+                child: isCompleted
+                    ? const Icon(Icons.check, color: Colors.white, size: 16)
                     : Text(
                         '${stepIndex + 1}',
                         style: TextStyle(
-                          color: stepIndex == currentStep
-                              ? Colors.white
-                              : Colors.grey.shade600,
+                          color: isCurrent ? Colors.white : Colors.grey.shade600,
                           fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                          fontSize: isCurrent ? 14 : 12,
                         ),
                       ),
               ),
@@ -200,7 +205,7 @@ class StepProgressIndicator extends StatelessWidget {
           }),
         ),
         if (stepLabels != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: stepLabels!
@@ -211,8 +216,9 @@ class StepProgressIndicator extends StatelessWidget {
                         label,
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 10,
+                          fontSize: 11,
                           color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w500,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

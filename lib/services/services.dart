@@ -3,3 +3,7 @@ export 'auth_service.dart';
 export 'onboarding_service.dart';
 export 'video_service.dart';
 export 'timeclock_service.dart';
+export 'app/chat_service.dart';
+export 'app/attendance_service.dart';
+export 'app/holiday_service.dart';
+export 'app/organization_service.dart';

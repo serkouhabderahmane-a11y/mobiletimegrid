@@ -52,7 +52,7 @@ class HolidayService {
         name: 'New Year\'s Day',
         startDate: DateTime(year, 1, 1),
         description: 'Celebration of the new year',
-        color: '#42B883',
+        color: '#006E5B',
       ),
       Holiday(
         id: 'hol-2',
@@ -104,7 +104,7 @@ class HolidayService {
         startDate: DateTime(year - 1, 5, 27),
         endDate: DateTime(year - 1, 5, 28),
         description: 'Day to honor military personnel who have died',
-        color: '#42B883',
+        color: '#006E5B',
       ),
       Holiday(
         id: 'hol-9',
@@ -118,7 +118,7 @@ class HolidayService {
         name: 'Veterans Day',
         startDate: DateTime(year - 1, 11, 11),
         description: 'Honor veterans of the US armed forces',
-        color: '#42B883',
+        color: '#006E5B',
       ),
     ];
   }

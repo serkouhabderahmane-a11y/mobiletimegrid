@@ -20,7 +20,7 @@ class Holiday {
     this.isRecurring = false,
     this.applicableDepartments,
     this.applicableLocations,
-    this.color = '#42B883',
+    this.color = '#006E5B',
     this.isFullDay = true,
     this.hoursCredit,
   });
@@ -76,7 +76,7 @@ class Holiday {
       applicableLocations: json['applicableLocations'] != null
           ? List<String>.from(json['applicableLocations'])
           : null,
-      color: json['color'] ?? '#42B883',
+      color: json['color'] ?? '#006E5B',
       isFullDay: json['isFullDay'] ?? json['is_full_day'] ?? true,
       hoursCredit: json['hoursCredit'] ?? json['hours_credit'],
     );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primary = Color(0xFF42B883);
-  static const Color primaryLight = Color(0xFF42B883);
-  static const Color primaryDark = Color(0xFF359268);
+  static const Color primary = Color(0xFF006E5B);
+  static const Color primaryLight = Color(0xFF006E5B);
+  static const Color primaryDark = Color(0xFF005A4A);
   
   static const Color secondary = Color(0xFF8B5CF6);
   
@@ -12,7 +12,7 @@ class AppColors {
   
   static const Color error = Color(0xFFEF4444);
   static const Color danger = Color(0xFFEF4444);
-  static const Color success = Color(0xFF42B883);
+  static const Color success = Color(0xFF006E5B);
   
   static const Color background = Color(0xFFF8FAFC);
   static const Color surface = Color(0xFFFFFFFF);
@@ -25,14 +25,14 @@ class AppColors {
   static const Color divider = Color(0xFFE2E8F0);
   static const Color border = Color(0xFF334155);
   
-  static const Color chatBubbleSent = Color(0xFF42B883);
+  static const Color chatBubbleSent = Color(0xFF006E5B);
   static const Color chatBubbleReceived = Color(0xFFF1F5F9);
   
-  static const Color online = Color(0xFF42B883);
+  static const Color online = Color(0xFF006E5B);
   static const Color offline = Color(0xFF94A3B8);
   
   static const Color breakYellow = Color(0xFFF59E0B);
-  static const Color checkInGreen = Color(0xFF42B883);
+  static const Color checkInGreen = Color(0xFF006E5B);
   static const Color checkOutRed = Color(0xFFEF4444);
 }
 
